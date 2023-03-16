@@ -2,8 +2,8 @@
 title: "Test_Posting"
 author: "Hyenoho Jeong"
 date: "2023-03-14"
-categories: [news, code, analysis]
+categories: [analysis]
 image: "image.jpg"
 ---
 
-hello.test
+안녕하세요 반갑습니다 테스트를 위한 포스트입니다.

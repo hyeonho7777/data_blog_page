@@ -1,17 +1,24 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "20202798_정현호_blog",
-    "section": "",
-    "text": "`\n\n\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 14, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nTest_Posting2\n\n\n\n\n\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 14, 2023\n\n\nHyenoho Jeong\n\n\n\n\n\n\n  \n\n\n\n\nTest_Posting2\n\n\n\n\n\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 14, 2023\n\n\nHyenoho Jeong\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nMar 11, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this blog\n안녕하세요.반가워요"
+    "text": "안녕하세요 반갑습니다.\n정현호 데이터마이닝 블로그입니다."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hyeonho_Jeong",
+    "section": "",
+    "text": "안녕하세요 20202798 정현호입니다.\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 14, 2023\n\n\nHyeonho Jeong\n\n\n\n\n\n\n  \n\n\n\n\nTest_Posting\n\n\n\n\n\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 14, 2023\n\n\nHyenoho Jeong\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 13, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nMar 11, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/hi/index.html",
+    "href": "posts/hi/index.html",
+    "title": "안녕하세요 20202798 정현호입니다.",
+    "section": "",
+    "text": "안녕하세요 데이터마이닝 20202798 정현호입니다."
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -23,16 +30,9 @@
   {
     "objectID": "posts/test_posting/index.html",
     "href": "posts/test_posting/index.html",
-    "title": "Test_Posting2",
+    "title": "Test_Posting",
     "section": "",
-    "text": "hello.test"
-  },
-  {
-    "objectID": "posts/test_posting_2/index.html",
-    "href": "posts/test_posting_2/index.html",
-    "title": "Test_Posting2",
-    "section": "",
-    "text": "hello.test2"
+    "text": "안녕하세요 반갑습니다 테스트를 위한 포스트입니다."
   },
   {
     "objectID": "posts/welcome/index.html",

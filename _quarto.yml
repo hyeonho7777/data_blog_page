@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "data_blog_page"
@@ -12,7 +13,7 @@ website:
         href: https://twitter.com
 format:
   html:
-    theme: cosmo
+    theme: lux
     css: styles.css
 
 
