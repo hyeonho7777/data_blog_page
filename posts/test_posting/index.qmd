@@ -2,7 +2,7 @@
 title: "Test_Posting"
 author: "Hyenoho Jeong"
 date: "2023-03-14"
-categories: [analysis]
+categories: [test]
 image: "image.jpg"
 ---
 

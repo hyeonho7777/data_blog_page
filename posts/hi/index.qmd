@@ -2,7 +2,7 @@
 title: "안녕하세요 20202798 정현호입니다."
 author: "Hyeonho Jeong"
 date: "2023-03-14"
-categories: [news, code, analysis]
+categories: [test]
 image: "image.jpg"
 ---
 

@@ -3,10 +3,7 @@ title: "About"
 image: profile.jpg
 about:
   template: jolla
-  links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
+  links:rn
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com
@@ -19,5 +16,5 @@ about:
 ### 안녕하세요 반갑습니다.
 
 정현호 데이터마이닝 블로그입니다.  
-안녕하세요.반갑습니다.반갑습니다. 반갑습니다.
+안녕하세요.반갑습니다.
 
