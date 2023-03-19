@@ -1,15 +1,15 @@
 ---
 title: "About"
-image: profile.jpg
+image: profile.png
 about:
   template: jolla
-  links:rn
+  links:
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/jihoyeo
 
 ---
 
