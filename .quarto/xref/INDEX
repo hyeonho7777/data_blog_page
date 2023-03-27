@@ -28,5 +28,11 @@
   },
   "posts/hello/index.qmd": {
     "index.html": "dd14ad91"
+  },
+  "posts/test_posting/2022-03-04-numpy.ipynb": {
+    "2022-03-04-numpy.html": "7f8d1eab"
+  },
+  "docs/posts/test_posting/2022-03-04-numpy.ipynb": {
+    "2022-03-04-numpy.html": "5e6c1783"
   }
 }
