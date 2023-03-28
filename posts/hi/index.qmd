@@ -6,4 +6,7 @@ categories: [test]
 image: "image.jpg"
 ---
 
+![](image.jpg)
+
+
 안녕하세요 데이터마이닝 20202798 정현호입니다.
