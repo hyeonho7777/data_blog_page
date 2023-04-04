@@ -10,7 +10,7 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com
-    - icon: github
+    - icon: github00
       text: Github
       href: https://github.com
 
