@@ -40,5 +40,8 @@
   },
   "posts/chapter_3/index.qmd": {
     "index.html": "eb4b3937"
+  },
+  "posts/numpy/2022-03-04-numpy.ipynb": {
+    "2022-03-04-numpy.html": "5cf1ee0c"
   }
 }
