@@ -49,5 +49,8 @@
   },
   "posts/chapter_3/pandas.ipynb": {
     "pandas.html": "80635c4d"
+  },
+  "posts/geo_1/exercise-your-first-map.ipynb": {
+    "exercise-your-first-map.html": "36521eac"
   }
 }
