@@ -1,5 +1,5 @@
 ---
-title: "안녕하세요 20202798 정현호입니다."
+title: "안녕하세요 반갑습니다."
 author: "Hyeonho Jeong"
 date: "2023-03-14"
 categories: [test]
