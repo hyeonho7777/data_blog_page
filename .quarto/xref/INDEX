@@ -70,5 +70,8 @@
   },
   "posts/geo_3/exercise_interactive_maps.ipynb": {
     "exercise_interactive_maps.html": "5e77c4c3"
+  },
+  "posts/geo_4/exercise_manipulating_geospatial_data.ipynb": {
+    "exercise_manipulating_geospatial_data.html": "f9af9883"
   }
 }
