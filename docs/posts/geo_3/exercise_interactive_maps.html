@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Hyeonho Jeong">
+<meta name="dcterms.date" content="2023-05-15">
 
-<title>data_blog_page – exercise_interactive_maps</title>
+<title>data_blog_page - Exercise: exercise-interactive-maps</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -162,7 +164,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Exercise: exercise-interactive-maps</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Hyeonho Jeong </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 15, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -171,15 +204,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p><strong>This notebook is an exercise in the <a href="https://www.kaggle.com/learn/geospatial-analysis">Geospatial Analysis</a> course. You can reference the tutorial at <a href="https://www.kaggle.com/alexisbcook/interactive-maps">this link</a>.</strong></p>
-<hr>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>You are an urban safety planner in Japan, and you are analyzing which areas of Japan need extra earthquake reinforcement. Which areas are both high in population density and prone to earthquakes?</p>
-<center>
-<img src="https://storage.googleapis.com/kaggle-media/learn/images/Kuh9gPj.png" width="450"><br>
-</center>
-<p>Before you get started, run the code cell below to set everything up.</p>
+
+<p>exercise-interactive-maps 입니다.</p>
 <div class="cell" data-outputid="bdf9f87e-1e0c-423b-a850-bb0d7350706d" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/drive'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -241,7 +267,6 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    m.save(file_name)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> IFrame(file_name, width<span class="op">=</span><span class="st">'100%'</span>, height<span class="op">=</span><span class="st">'500px'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
 <section id="exercises" class="level1">
 <h1>Exercises</h1>
 <section id="do-earthquakes-coincide-with-plate-boundaries" class="level3">

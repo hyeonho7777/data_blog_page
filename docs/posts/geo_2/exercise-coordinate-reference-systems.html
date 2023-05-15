@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Hyeonho Jeong">
+<meta name="dcterms.date" content="2023-05-12">
 
-<title>data_blog_page – exercise-coordinate-reference-systems</title>
+<title>data_blog_page - Exercise: Coordinate Reference Systems</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -162,7 +164,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Exercise: Coordinate Reference Systems</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Hyeonho Jeong </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 12, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -171,24 +204,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p><strong>This notebook is an exercise in the <a href="https://www.kaggle.com/learn/geospatial-analysis">Geospatial Analysis</a> course. You can reference the tutorial at <a href="https://www.kaggle.com/alexisbcook/coordinate-reference-systems">this link</a>.</strong></p>
-<hr>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>You are a bird conservation expert and want to understand migration patterns of purple martins. In your research, you discover that these birds typically spend the summer breeding season in the eastern United States, and then migrate to South America for the winter. But since this bird is under threat of endangerment, you’d like to take a closer look at the locations that these birds are more likely to visit.</p>
-<center>
-<img src="https://storage.googleapis.com/kaggle-media/learn/images/qQcS0KM.png" width="1000"><br>
-</center>
-<p>There are several <a href="https://www.iucn.org/theme/protected-areas/about">protected areas</a> in South America, which operate under special regulations to ensure that species that migrate (or live) there have the best opportunity to thrive. You’d like to know if purple martins tend to visit these areas. To answer this question, you’ll use some recently collected data that tracks the year-round location of eleven different birds.</p>
-<p>Before you get started, run the code cell below to set everything up.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131064416,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:35593,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="302aca42-f750-4ccc-db3c-4b32f0774867" data-execution_count="1">
+
+<p>Coordinate Reference Systems 입니다.</p>
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:35593,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131064416,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="302aca42-f750-4ccc-db3c-4b32f0774867" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/drive'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Mounted at /content/drive</code></pre>
 </div>
 </div>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131209958,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:10170,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="6e1188cc-4e20-4efd-b046-a45a2d6cbaf6" data-execution_count="5">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:10170,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131209958,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="6e1188cc-4e20-4efd-b046-a45a2d6cbaf6" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install geopandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
@@ -234,13 +259,12 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>binder.bind(<span class="bu">globals</span>())</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> learntools.geospatial.ex2 <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
 <section id="exercises" class="level1">
 <h1>Exercises</h1>
 <section id="load-the-data." class="level3">
 <h3 class="anchored" data-anchor-id="load-the-data.">1) Load the data.</h3>
 <p>Run the next code cell (without changes) to load the GPS data into a pandas DataFrame <code>birds_df</code>.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131286045,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:477,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="4b78ce68-8e70-43fc-ddfa-799a5c3d74d0" data-execution_count="9">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:477,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131286045,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="4b78ce68-8e70-43fc-ddfa-799a5c3d74d0" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data and print the first 5 rows</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#birds_df = pd.read_csv("../input/geospatial-learn-course-data/purple_martin.csv", parse_dates=['timestamp'])</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>birds_df <span class="op">=</span> pd.read_csv(<span class="st">"/content/drive/MyDrive/data_mining/purple_martin.csv"</span>, parse_dates<span class="op">=</span>[<span class="st">'timestamp'</span>])</span>
@@ -384,7 +408,7 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <p>Use the next code cell to create a GeoDataFrame <code>birds</code>.<br>
 - <code>birds</code> should have all of the columns from <code>birds_df</code>, along with a “geometry” column that contains Point objects with (longitude, latitude) locations.<br>
 - Set the CRS of <code>birds</code> to <code>{'init': 'epsg:4326'}</code>.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131297219,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:965,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="70b7bd93-127d-476b-b8be-e4031e4a7b02" data-execution_count="11">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:965,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131297219,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="70b7bd93-127d-476b-b8be-e4031e4a7b02" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here: Create the GeoDataFrame</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>birds <span class="op">=</span> gpd.GeoDataFrame(birds_df, geometry<span class="op">=</span>gpd.points_from_xy(birds_df[<span class="st">"location-long"</span>], birds_df[<span class="st">"location-lat"</span>]))</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -405,7 +429,7 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <section id="plot-the-data." class="level3">
 <h3 class="anchored" data-anchor-id="plot-the-data.">2) Plot the data.</h3>
 <p>Next, we load in the <code>'naturalearth_lowres'</code> dataset from GeoPandas, and set <code>americas</code> to a GeoDataFrame containing the boundaries of all countries in the Americas (both North and South America). Run the next code cell without changes.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131301765,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:408,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="1f9e935e-5aec-4a01-dab9-36886bf4f4c9" data-execution_count="12">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:408,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131301765,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="1f9e935e-5aec-4a01-dab9-36886bf4f4c9" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load a GeoDataFrame with country boundaries in North/South America, print the first 5 rows</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>world <span class="op">=</span> gpd.read_file(gpd.datasets.get_path(<span class="st">'naturalearth_lowres'</span>))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>americas <span class="op">=</span> world.loc[world[<span class="st">'continent'</span>].isin([<span class="st">'North America'</span>, <span class="st">'South America'</span>])]</span>
@@ -559,7 +583,7 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 </div>
 <p>Use the next code cell to create a single plot that shows both: (1) the country boundaries in the <code>americas</code> GeoDataFrame, and (2) all of the points in the <code>birds_gdf</code> GeoDataFrame.</p>
 <p>Don’t worry about any special styling here; just create a preliminary plot, as a quick sanity check that all of the data was loaded properly. In particular, you don’t have to worry about color-coding the points to differentiate between birds, and you don’t have to differentiate starting points from ending points. We’ll do that in the next part of the exercise.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131307526,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:2572,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="96825603-20ba-4d74-d47e-b6f61363b40c" data-execution_count="13">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:2572,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131307526,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="96825603-20ba-4d74-d47e-b6f61363b40c" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -574,10 +598,10 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see a hint</span></span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#q_2.hint()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="exercise-coordinate-reference-systems_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<p><img src="exercise-coordinate-reference-systems_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;error&quot;,&quot;timestamp&quot;:1684131311038,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:415,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="d7932aef-8457-43cf-fa02-33c667f29ca3" data-execution_count="14">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:415,&quot;status&quot;:&quot;error&quot;,&quot;timestamp&quot;:1684131311038,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="d7932aef-8457-43cf-fa02-33c667f29ca3" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get credit for your work after you have created a map</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_2.check()</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -591,7 +615,7 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <section id="where-does-each-bird-start-and-end-its-journey-part-1" class="level3">
 <h3 class="anchored" data-anchor-id="where-does-each-bird-start-and-end-its-journey-part-1">3) Where does each bird start and end its journey? (Part 1)</h3>
 <p>Now, we’re ready to look more closely at each bird’s path. Run the next code cell to create two GeoDataFrames: - <code>path_gdf</code> contains LineString objects that show the path of each bird. It uses the <code>LineString()</code> method to create a LineString object from a list of Point objects. - <code>start_gdf</code> contains the starting points for each bird.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131321219,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:980,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="622d4821-e190-4c4e-e01d-f46a97a942cc" data-execution_count="15">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:980,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131321219,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="622d4821-e190-4c4e-e01d-f46a97a942cc" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GeoDataFrame showing path for each bird</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>path_df <span class="op">=</span> birds.groupby(<span class="st">"tag-local-identifier"</span>)[<span class="st">'geometry'</span>].<span class="bu">apply</span>(<span class="bu">list</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: LineString(x)).reset_index()</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>path_gdf <span class="op">=</span> gpd.GeoDataFrame(path_df, geometry<span class="op">=</span>path_df.geometry)</span>
@@ -731,7 +755,7 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 </div>
 <p>Use the next code cell to create a GeoDataFrame <code>end_gdf</code> containing the final location of each bird.<br>
 - The format should be identical to that of <code>start_gdf</code>, with two columns (“tag-local-identifier” and “geometry”), where the “geometry” column contains Point objects. - Set the CRS of <code>end_gdf</code> to <code>{'init': 'epsg:4326'}</code>.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131328997,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:602,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="59141b45-9457-4301-d3ce-6fe8777487aa" data-execution_count="17">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:602,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131328997,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="59141b45-9457-4301-d3ce-6fe8777487aa" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>end_df <span class="op">=</span> birds.groupby(<span class="st">"tag-local-identifier"</span>)[<span class="st">'geometry'</span>].<span class="bu">apply</span>(<span class="bu">list</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: x[<span class="op">-</span><span class="dv">1</span>]).reset_index()</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>end_gdf <span class="op">=</span> gpd.GeoDataFrame(end_df, geometry<span class="op">=</span>end_df.geometry)</span>
@@ -753,7 +777,7 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <section id="where-does-each-bird-start-and-end-its-journey-part-2" class="level3">
 <h3 class="anchored" data-anchor-id="where-does-each-bird-start-and-end-its-journey-part-2">4) Where does each bird start and end its journey? (Part 2)</h3>
 <p>Use the GeoDataFrames from the question above (<code>path_gdf</code>, <code>start_gdf</code>, and <code>end_gdf</code>) to visualize the paths of all birds on a single map. You may also want to use the <code>americas</code> GeoDataFrame.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131334609,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:1027,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="ba1f4394-2ea9-4b7c-b2b0-5a483673b7cd" data-execution_count="18">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:1027,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1684131334609,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="ba1f4394-2ea9-4b7c-b2b0-5a483673b7cd" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -773,7 +797,7 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see a hint</span></span>
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co">#q_4.hint()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="exercise-coordinate-reference-systems_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+<p><img src="exercise-coordinate-reference-systems_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell">
@@ -788,7 +812,7 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <h3 class="anchored" data-anchor-id="where-are-the-protected-areas-in-south-america-part-1">5) Where are the protected areas in South America? (Part 1)</h3>
 <p>It looks like all of the birds end up somewhere in South America. But are they going to protected areas?</p>
 <p>In the next code cell, you’ll create a GeoDataFrame <code>protected_areas</code> containing the locations of all of the protected areas in South America. The corresponding shapefile is located at filepath <code>protected_filepath</code>.</p>
-<div class="cell" data-executioninfo="{&quot;status&quot;:&quot;error&quot;,&quot;timestamp&quot;:1684132008873,&quot;user_tz&quot;:-540,&quot;elapsed&quot;:5,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;}}" data-outputid="21d8fac3-38f8-4ee1-9754-2a6e88a666a8" data-execution_count="21">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;error&quot;,&quot;timestamp&quot;:1684132008873,&quot;user&quot;:{&quot;displayName&quot;:&quot;정현호&quot;,&quot;userId&quot;:&quot;16441660935680360024&quot;},&quot;user_tz&quot;:-540}" data-outputid="21d8fac3-38f8-4ee1-9754-2a6e88a666a8">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Path of the shapefile to load</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#protected_filepath = "../input/geospatial-learn-course-data/SAPA_Aug2019-shapefile/SAPA_Aug2019-shapefile/SAPA_Aug2019-shapefile-polygons.shp"</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>protected_filepath <span class="op">=</span> pd.read_shp(<span class="st">"/content/drive/MyDrive/data_mining/SAPA_Aug2019-shapefile/SAPA_Aug2019-shapefile/SAPA_Aug2019-shapefile-polygons.shp"</span>)</span>
@@ -798,44 +822,41 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your answer</span></span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>q_5.check()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>AttributeError: ignored</code></pre>
-</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lines below will give you a hint or solution code</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_5.hint()</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#q_5.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lines below will give you a hint or solution code</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_5.hint()</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#q_5.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="where-are-the-protected-areas-in-south-america-part-2" class="level3">
 <h3 class="anchored" data-anchor-id="where-are-the-protected-areas-in-south-america-part-2">6) Where are the protected areas in South America? (Part 2)</h3>
 <p>Create a plot that uses the <code>protected_areas</code> GeoDataFrame to show the locations of the protected areas in South America. (<em>You’ll notice that some protected areas are on land, while others are in marine waters.</em>)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Country boundaries in South America</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>south_america <span class="op">=</span> americas.loc[americas[<span class="st">'continent'</span>]<span class="op">==</span><span class="st">'South America'</span>]</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the country boundaries in South America</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>south_america.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), color<span class="op">=</span><span class="st">'white'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the protected areas</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>protected_areas.plot(ax<span class="op">=</span>plt.gca(), color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see a hint</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co">#q_6.hint()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Country boundaries in South America</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>south_america <span class="op">=</span> americas.loc[americas[<span class="st">'continent'</span>]<span class="op">==</span><span class="st">'South America'</span>]</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the country boundaries in South America</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>south_america.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), color<span class="op">=</span><span class="st">'white'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the protected areas</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>protected_areas.plot(ax<span class="op">=</span>plt.gca(), color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see a hint</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co">#q_6.hint()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get credit for your work after you have created a map</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>q_6.check()</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see our solution (your code may look different!)</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#q_6.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get credit for your work after you have created a map</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>q_6.check()</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see our solution (your code may look different!)</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#q_6.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="what-percentage-of-south-america-is-protected" class="level3">
@@ -844,31 +865,31 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <p>As a first step, you calculate the total area of all protected lands in South America (not including marine area). To do this, you use the “REP_AREA” and “REP_M_AREA” columns, which contain the total area and total marine area, respectively, in square kilometers.</p>
 <p>Run the code cell below without changes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>P_Area <span class="op">=</span> <span class="bu">sum</span>(protected_areas[<span class="st">'REP_AREA'</span>]<span class="op">-</span>protected_areas[<span class="st">'REP_M_AREA'</span>])</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"South America has </span><span class="sc">{}</span><span class="st"> square kilometers of protected areas."</span>.<span class="bu">format</span>(P_Area))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>P_Area <span class="op">=</span> <span class="bu">sum</span>(protected_areas[<span class="st">'REP_AREA'</span>]<span class="op">-</span>protected_areas[<span class="st">'REP_M_AREA'</span>])</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"South America has </span><span class="sc">{}</span><span class="st"> square kilometers of protected areas."</span>.<span class="bu">format</span>(P_Area))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, to finish the calculation, you’ll use the <code>south_america</code> GeoDataFrame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>south_america.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>south_america.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calculate the total area of South America by following these steps: - Calculate the area of each country using the <code>area</code> attribute of each polygon (with EPSG 3035 as the CRS), and add up the results. The calculated area will be in units of square meters. - Convert your answer to have units of square kilometeters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here: Calculate the total area of South America (in square kilometers)</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>totalArea <span class="op">=</span> south_america.to_crs(epsg<span class="op">=</span><span class="dv">3035</span>).geometry.area.<span class="bu">sum</span>() <span class="op">/</span> <span class="dv">10</span><span class="op">**</span><span class="dv">6</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your answer</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>q_7.check()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here: Calculate the total area of South America (in square kilometers)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>totalArea <span class="op">=</span> south_america.to_crs(epsg<span class="op">=</span><span class="dv">3035</span>).geometry.area.<span class="bu">sum</span>() <span class="op">/</span> <span class="dv">10</span><span class="op">**</span><span class="dv">6</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your answer</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>q_7.check()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lines below will give you a hint or solution code</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_7.hint()</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#q_7.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lines below will give you a hint or solution code</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_7.hint()</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#q_7.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Run the code cell below to calculate the percentage of South America that is protected.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What percentage of South America is protected?</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>percentage_protected <span class="op">=</span> P_Area<span class="op">/</span>totalArea</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Approximately </span><span class="sc">{}% o</span><span class="st">f South America is protected.'</span>.<span class="bu">format</span>(<span class="bu">round</span>(percentage_protected<span class="op">*</span><span class="dv">100</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What percentage of South America is protected?</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>percentage_protected <span class="op">=</span> P_Area<span class="op">/</span>totalArea</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Approximately </span><span class="sc">{}% o</span><span class="st">f South America is protected.'</span>.<span class="bu">format</span>(<span class="bu">round</span>(percentage_protected<span class="op">*</span><span class="dv">100</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="where-are-the-birds-in-south-america" class="level3">
@@ -877,29 +898,29 @@ Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.1
 <p>Create a plot that shows for all birds, all of the locations where they were discovered in South America. Also plot the locations of all protected areas in South America.</p>
 <p>To exclude protected areas that are purely marine areas (with no land component), you can use the “MARINE” column (and plot only the rows in <code>protected_areas[protected_areas['MARINE']!='2']</code>, instead of every row in the <code>protected_areas</code> GeoDataFrame).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the country boundaries in South America</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>south_america.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), color<span class="op">=</span><span class="st">'white'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the bird locations</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>birds.plot(ax<span class="op">=</span>plt.gca(), markersize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'o'</span>, label<span class="op">=</span><span class="st">'Birds'</span>)</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the protected areas (excluding marine areas)</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>protected_areas[protected_areas[<span class="st">'MARINE'</span>]<span class="op">!=</span><span class="st">'2'</span>].plot(ax<span class="op">=</span>plt.gca(), color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, label<span class="op">=</span><span class="st">'Protected Areas'</span>)</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see a hint</span></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="co">#q_8.hint()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the country boundaries in South America</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>south_america.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), color<span class="op">=</span><span class="st">'white'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the bird locations</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>birds.plot(ax<span class="op">=</span>plt.gca(), markersize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'o'</span>, label<span class="op">=</span><span class="st">'Birds'</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the protected areas (excluding marine areas)</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>protected_areas[protected_areas[<span class="st">'MARINE'</span>]<span class="op">!=</span><span class="st">'2'</span>].plot(ax<span class="op">=</span>plt.gca(), color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, label<span class="op">=</span><span class="st">'Protected Areas'</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see a hint</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co">#q_8.hint()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get credit for your work after you have created a map</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>q_8.check()</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see our solution (your code may look different!)</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co">#q_8.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get credit for your work after you have created a map</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>q_8.check()</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see our solution (your code may look different!)</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#q_8.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

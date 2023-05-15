@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/geo_2/exercise-coordinate-reference-systems.html",
       "/posts/geo_3/exercise_interactive_maps.html",
+      "/posts/geo_2/exercise-coordinate-reference-systems.html",
       "/posts/geo_1/fristmap.html",
       "/posts/chapter_3/pandas.html",
       "/posts/chapter_2/2022-03-04-numpy.html",
