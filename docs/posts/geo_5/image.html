@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Hyeonho Jeong">
+<meta name="dcterms.date" content="2023-05-20">
+
+<title>data_blog_page - Exercise: Proximity Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">data_blog_page</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Exercise: Proximity Analysis</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Hyeonho Jeong </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 20, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Exercise: Proximity Analysis입니다.</p>
+<div class="cell" data-outputid="c741a038-b086-4e07-981d-a153832ef85b" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/drive'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mounted at /content/drive</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="3c27804d-c985-4832-aa3c-a060b06f7edf" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install geopandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
+Collecting geopandas
+  Downloading geopandas-0.13.0-py3-none-any.whl (1.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 15.9 MB/s eta 0:00:00
+Collecting fiona&gt;=1.8.19 (from geopandas)
+  Downloading Fiona-1.9.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.0/16.0 MB 68.7 MB/s eta 0:00:00
+Requirement already satisfied: packaging in /usr/local/lib/python3.10/dist-packages (from geopandas) (23.1)
+Requirement already satisfied: pandas&gt;=1.1.0 in /usr/local/lib/python3.10/dist-packages (from geopandas) (1.5.3)
+Collecting pyproj&gt;=3.0.1 (from geopandas)
+  Downloading pyproj-3.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (7.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.7/7.7 MB 74.3 MB/s eta 0:00:00
+Requirement already satisfied: shapely&gt;=1.7.1 in /usr/local/lib/python3.10/dist-packages (from geopandas) (2.0.1)
+Requirement already satisfied: attrs&gt;=19.2.0 in /usr/local/lib/python3.10/dist-packages (from fiona&gt;=1.8.19-&gt;geopandas) (23.1.0)
+Requirement already satisfied: certifi in /usr/local/lib/python3.10/dist-packages (from fiona&gt;=1.8.19-&gt;geopandas) (2022.12.7)
+Requirement already satisfied: click~=8.0 in /usr/local/lib/python3.10/dist-packages (from fiona&gt;=1.8.19-&gt;geopandas) (8.1.3)
+Collecting click-plugins&gt;=1.0 (from fiona&gt;=1.8.19-&gt;geopandas)
+  Downloading click_plugins-1.1.1-py2.py3-none-any.whl (7.5 kB)
+Collecting cligj&gt;=0.5 (from fiona&gt;=1.8.19-&gt;geopandas)
+  Downloading cligj-0.7.2-py3-none-any.whl (7.1 kB)
+Collecting munch&gt;=2.3.2 (from fiona&gt;=1.8.19-&gt;geopandas)
+  Downloading munch-3.0.0-py2.py3-none-any.whl (10 kB)
+Requirement already satisfied: python-dateutil&gt;=2.8.1 in /usr/local/lib/python3.10/dist-packages (from pandas&gt;=1.1.0-&gt;geopandas) (2.8.2)
+Requirement already satisfied: pytz&gt;=2020.1 in /usr/local/lib/python3.10/dist-packages (from pandas&gt;=1.1.0-&gt;geopandas) (2022.7.1)
+Requirement already satisfied: numpy&gt;=1.21.0 in /usr/local/lib/python3.10/dist-packages (from pandas&gt;=1.1.0-&gt;geopandas) (1.22.4)
+Requirement already satisfied: six in /usr/local/lib/python3.10/dist-packages (from munch&gt;=2.3.2-&gt;fiona&gt;=1.8.19-&gt;geopandas) (1.16.0)
+Installing collected packages: pyproj, munch, cligj, click-plugins, fiona, geopandas
+Successfully installed click-plugins-1.1.1 cligj-0.7.2 fiona-1.9.3 geopandas-0.13.0 munch-3.0.0 pyproj-3.5.0</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> MultiPolygon</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> folium <span class="im">import</span> Choropleth, Marker</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> folium.plugins <span class="im">import</span> HeatMap, MarkerCluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> learntools.core <span class="im">import</span> binder</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>binder.bind(<span class="bu">globals</span>())</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> learntools.geospatial.ex5 <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You’ll use the <code>embed_map()</code> function to visualize your maps.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> embed_map(m, file_name):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> IPython.display <span class="im">import</span> IFrame</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    m.save(file_name)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> IFrame(file_name, width<span class="op">=</span><span class="st">'100%'</span>, height<span class="op">=</span><span class="st">'500px'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="exercises" class="level1">
+<h1>Exercises</h1>
+<section id="visualize-the-collision-data." class="level3">
+<h3 class="anchored" data-anchor-id="visualize-the-collision-data.">1) Visualize the collision data.</h3>
+<p>Run the code cell below to load a GeoDataFrame <code>collisions</code> tracking major motor vehicle collisions in 2013-2018.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"SHAPE_RESTORE_SHX"</span>] <span class="op">=</span> <span class="st">"YES"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="44b7fd25-5248-4ef8-c959-f22089ef24d8" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#collisions = gpd.read_file("../input/geospatial-learn-course-data/NYPD_Motor_Vehicle_Collisions/NYPD_Motor_Vehicle_Collisions/NYPD_Motor_Vehicle_Collisions.shp")</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>collisions <span class="op">=</span> gpd.read_file(<span class="st">"/content/drive/MyDrive/data_m/NYPD_Motor_Vehicle_Collisions.shp"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>collisions.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+
+
+  <div id="df-8df47490-dfc6-43fa-9c3c-084dd63c4b12">
+    <div class="colab-df-container">
+      <div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>POINT (1043750.211 245785.815)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>POINT (1047831.185 198333.171)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>POINT (1028139.293 260041.178)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>POINT (988519.261 214979.320)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>POINT (993716.669 157907.212)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-8df47490-dfc6-43fa-9c3c-084dd63c4b12')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  </svg>
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-8df47490-dfc6-43fa-9c3c-084dd63c4b12 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-8df47490-dfc6-43fa-9c3c-084dd63c4b12');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+</div>
+<p>Use the “LATITUDE” and “LONGITUDE” columns to create an interactive map to visualize the collision data. What type of map do you think is most effective?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m_1 <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">40.7</span>, <span class="op">-</span><span class="dv">74</span>], zoom_start<span class="op">=</span><span class="dv">11</span>) </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here: Visualize the collision data</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, row <span class="kw">in</span> collisions.iterrows():</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    folium.Marker(location<span class="op">=</span>[row[<span class="st">'LATITUDE'</span>], row[<span class="st">'LONGITUDE'</span>]]).add_to(m_1)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see a hint</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#q_1.hint()</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the map</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>embed_map(m_1, <span class="st">"q_1.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get credit for your work after you have created a map</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>q_1.check()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see our solution (your code may look different!)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#q_1.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="understand-hospital-coverage." class="level3">
+<h3 class="anchored" data-anchor-id="understand-hospital-coverage.">2) Understand hospital coverage.</h3>
+<p>Run the next code cell to load the hospital data.</p>
+<div class="cell" data-outputid="bfc5d76e-98ef-4807-ceb2-b5b44c67bafd" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#hospitals = gpd.read_file("../input/geospatial-learn-course-data/nyu_2451_34494/nyu_2451_34494/nyu_2451_34494.shp")</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>hospitals <span class="op">=</span> gpd.read_file(<span class="st">"/content/drive/MyDrive/data_m/nyu_2451_34494/nyu_2451_34494/nyu_2451_34494.shp"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>hospitals.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+
+
+  <div id="df-15468147-91ab-4e3d-9dc4-7106ece75417">
+    <div class="colab-df-container">
+      <div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>name</th>
+      <th>address</th>
+      <th>zip</th>
+      <th>factype</th>
+      <th>facname</th>
+      <th>capacity</th>
+      <th>capname</th>
+      <th>bcode</th>
+      <th>xcoord</th>
+      <th>ycoord</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>317000001H1178</td>
+      <td>BRONX-LEBANON HOSPITAL CENTER - CONCOURSE DIVI...</td>
+      <td>1650 Grand Concourse</td>
+      <td>10457</td>
+      <td>3102</td>
+      <td>Hospital</td>
+      <td>415</td>
+      <td>Beds</td>
+      <td>36005</td>
+      <td>1008872.0</td>
+      <td>246596.0</td>
+      <td>40.843490</td>
+      <td>-73.911010</td>
+      <td>POINT (1008872.000 246596.000)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>317000001H1164</td>
+      <td>BRONX-LEBANON HOSPITAL CENTER - FULTON DIVISION</td>
+      <td>1276 Fulton Ave</td>
+      <td>10456</td>
+      <td>3102</td>
+      <td>Hospital</td>
+      <td>164</td>
+      <td>Beds</td>
+      <td>36005</td>
+      <td>1011044.0</td>
+      <td>242204.0</td>
+      <td>40.831429</td>
+      <td>-73.903178</td>
+      <td>POINT (1011044.000 242204.000)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>317000011H1175</td>
+      <td>CALVARY HOSPITAL INC</td>
+      <td>1740-70 Eastchester Rd</td>
+      <td>10461</td>
+      <td>3102</td>
+      <td>Hospital</td>
+      <td>225</td>
+      <td>Beds</td>
+      <td>36005</td>
+      <td>1027505.0</td>
+      <td>248287.0</td>
+      <td>40.848060</td>
+      <td>-73.843656</td>
+      <td>POINT (1027505.000 248287.000)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>317000002H1165</td>
+      <td>JACOBI MEDICAL CENTER</td>
+      <td>1400 Pelham Pkwy</td>
+      <td>10461</td>
+      <td>3102</td>
+      <td>Hospital</td>
+      <td>457</td>
+      <td>Beds</td>
+      <td>36005</td>
+      <td>1027042.0</td>
+      <td>251065.0</td>
+      <td>40.855687</td>
+      <td>-73.845311</td>
+      <td>POINT (1027042.000 251065.000)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>317000008H1172</td>
+      <td>LINCOLN MEDICAL &amp; MENTAL HEALTH CENTER</td>
+      <td>234 E 149 St</td>
+      <td>10451</td>
+      <td>3102</td>
+      <td>Hospital</td>
+      <td>362</td>
+      <td>Beds</td>
+      <td>36005</td>
+      <td>1005154.0</td>
+      <td>236853.0</td>
+      <td>40.816758</td>
+      <td>-73.924478</td>
+      <td>POINT (1005154.000 236853.000)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-15468147-91ab-4e3d-9dc4-7106ece75417')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  </svg>
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-15468147-91ab-4e3d-9dc4-7106ece75417 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-15468147-91ab-4e3d-9dc4-7106ece75417');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+</div>
+<p>Use the “latitude” and “longitude” columns to visualize the hospital locations.</p>
+<div class="cell" data-outputid="cf83f9e0-d5d6-4a1f-925a-bfb36ae08ac9" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>m_2 <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">40.7</span>, <span class="op">-</span><span class="dv">74</span>], zoom_start<span class="op">=</span><span class="dv">11</span>) </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here: Visualize the hospital locations</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add markers for each hospital location</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, row <span class="kw">in</span> hospitals.iterrows():</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    folium.Marker(location<span class="op">=</span>[row[<span class="st">'latitude'</span>], row[<span class="st">'longitude'</span>]]).add_to(m_2)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the map</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>display(m_2)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see a hint</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#q_2.hint()</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the map</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>embed_map(m_2, <span class="st">"q_2.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -&gt; Trust Notebook</span><iframe srcdoc="<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;></script>
+    <script src=&quot;https://code.jquery.com/jquery-1.12.4.min.js&quot;></script>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;></script>
+    <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;></script>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/>
+    
+            <meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
+            <style>
+                #map_22a4a21c329c5908cc5c880e604d92f6 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class=&quot;folium-map&quot; id=&quot;map_22a4a21c329c5908cc5c880e604d92f6&quot; ></div>
+        
+</body>
+<script>
+    
+    
+            var map_22a4a21c329c5908cc5c880e604d92f6 = L.map(
+                &quot;map_22a4a21c329c5908cc5c880e604d92f6&quot;,
+                {
+                    center: [40.7, -74.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 11,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_8d6a1a45176b4e4f6e6687e7e4219269 = L.tileLayer(
+                &quot;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {&quot;attribution&quot;: &quot;Data by \u0026copy; \u003ca target=\&quot;_blank\&quot; href=\&quot;http://openstreetmap.org\&quot;\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\&quot;_blank\&quot; href=\&quot;http://www.openstreetmap.org/copyright\&quot;\u003eODbL\u003c/a\u003e.&quot;, &quot;detectRetina&quot;: false, &quot;maxNativeZoom&quot;: 18, &quot;maxZoom&quot;: 18, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_fd2073a0e7d9fb92917d9b0e771cd717 = L.marker(
+                [40.84348984739682, -73.9110103877187],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_8015dec0007ea803604e03acad1c2389 = L.marker(
+                [40.83142876488179, -73.90317782803042],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_edd23fc966ccceb2e3c2cf9101b60c9c = L.marker(
+                [40.848059524296055, -73.84365561299151],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_93cbd5730ec95a3e28396781a9428407 = L.marker(
+                [40.85568655396233, -73.84531138280727],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_532938bcf39dc9be514cbc0aa1c184a9 = L.marker(
+                [40.81675769880821, -73.92447845294292],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_993218f523cae7af6fc99246177d45d4 = L.marker(
+                [40.8498496292291, -73.84610932136209],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_2daab7a65be18a48b458e91ba3a4a570 = L.marker(
+                [40.880828056610234, -73.87994733604533],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_1dcd12b7ec401e2439756761f2379ba0 = L.marker(
+                [40.840707344128425, -73.8484434844751],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_089c9285caadc81611df67df33141dbe = L.marker(
+                [40.893517718763405, -73.86122475983386],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_495a7aca917b20bd0be86a0195727e3c = L.marker(
+                [40.88048615007653, -73.88108707078342],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_4805035550635d9e33b32b7d6a0394ff = L.marker(
+                [40.85337772916848, -73.89037489167946],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_be6353fa07d38d997fcc116d273ff01b = L.marker(
+                [40.65491846463238, -73.9123791741448],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_39736a63b67262bb027022dd7ca8fbb0 = L.marker(
+                [40.69057965481238, -73.97793163176702],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_ed943a176c3daa4a277f16eb78f70cb0 = L.marker(
+                [40.585645970507926, -73.96486850038322],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_1f61fca1fdc08783896d372f6d41027e = L.marker(
+                [40.67843021053433, -73.93759250176674],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_0366521ddbf81642a204d5c0bbdbbf01 = L.marker(
+                [40.656686551383224, -73.94383353874257],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_ca078a184d21898164a7784c4ea22076 = L.marker(
+                [40.659574215904684, -73.93380403563673],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_65a57a518970e01318e118697d9f8f05 = L.marker(
+                [40.64667161679278, -74.02122142087823],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_4770588fa6af3b4d0aa8bb1fd4439541 = L.marker(
+                [40.63950693380259, -73.99870645745953],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_713226f0f4d622401a290eeacf857533 = L.marker(
+                [40.61873121403783, -73.94297936911907],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_8b0fd32ddb7f7e47ee358bae6a181216 = L.marker(
+                [40.61391396173966, -73.9484978425456],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_5cdf0407318ed26b076abda713a031dd = L.marker(
+                [40.66782845166711, -73.97913592381343],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_40d3803348a31e5c52e112f3df7d35e9 = L.marker(
+                [40.690002595723904, -73.99743259117099],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_863f61915736ac91ed4a8e4bfac2ee55 = L.marker(
+                [40.69043352049397, -73.99725588378374],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_f8ba4e9a96995e9537486c06d79fdfac = L.marker(
+                [40.655089742874665, -73.94518999648369],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_49c43b5d1937a7b175dc13824ec6e5e6 = L.marker(
+                [40.699488036608805, -73.9427660419906],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_839f5ae4682ed0af2ca080d5012c6a6a = L.marker(
+                [40.70420197722319, -73.91756211820649],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_037a30e92ff94d823ee79b7b0e693983 = L.marker(
+                [40.73874694182294, -73.9753427823785],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_2f3f804cac26f7a24243c9302346e3d0 = L.marker(
+                [40.75760723115322, -73.95260272039623],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_916f450fb67fe1c4094e166db0a7184d = L.marker(
+                [40.814123532751616, -73.93976651076436],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_c26a75bf64bdc3ea17077437452e8e69 = L.marker(
+                [40.80299712174222, -73.94112025542181],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_c1e094187b99d13da74ee2b351a3a615 = L.marker(
+                [40.765108666479435, -73.9527273412189],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_53daa99465e38c1a571c04bf838916a1 = L.marker(
+                [40.73771480651282, -74.00087325540062],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_8298f59897041aa7f68b3b829a6ee922 = L.marker(
+                [40.77365334626779, -73.96085559969245],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_e58158d42c551911d03a8b026f67193f = L.marker(
+                [40.764374674631455, -73.95679987256894],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_8a4b6a340599869fd7430b1a3d0ba61b = L.marker(
+                [40.78505397397865, -73.94496023523027],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_ef433282c6e1e2b4ae38c2d5215280e6 = L.marker(
+                [40.73332734064887, -73.98234480428712],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_b83fdbb7ec05e0ff22a35222bd0f5393 = L.marker(
+                [40.78987464729508, -73.95326589972156],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_d754ed4a7d4568234e4abb6b1ee9083d = L.marker(
+                [40.76969584616553, -73.98688765825308],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_99f26efd8b8edee1bccc338558b8f8c8 = L.marker(
+                [40.80569555361154, -73.96147972367363],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_f820d5e52646cf7303b2fc9e4c3cdc90 = L.marker(
+                [40.73188392497343, -73.98461112231631],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_48eb842cd7b36d27afd5ecc0d368499e = L.marker(
+                [40.873227421595, -73.91294845848223],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_6f57baaaa29e50d0bb53ebb44f06a087 = L.marker(
+                [40.840696082969366, -73.94163622952348],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_5423d9c8954ba9a2b6561f2c21baba68 = L.marker(
+                [40.764453245236844, -73.9541429039059],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_202853c87838e0e3170fa894b8587f06 = L.marker(
+                [40.710357701836905, -74.00501014024093],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_2022dc97b4f9840e99a6429413293aa7 = L.marker(
+                [40.73439514871634, -73.98300123444983],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_5689ad5144243cf2db7ed34a07947270 = L.marker(
+                [40.742139177884276, -73.97408207907505],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_63a7aa6fb26f47498914e06e4e4dc27c = L.marker(
+                [40.76254627225295, -73.95573615593123],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_4ddce5c14030f16e41f4465425065677 = L.marker(
+                [40.74512101423679, -73.88564131742412],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_6d10166e3f14210be654d0a5a445bd5c = L.marker(
+                [40.75561323005755, -73.81687376203057],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_6bd2c27fcfa8162f1258809dbffc3537 = L.marker(
+                [40.72903352450227, -73.85154781041423],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_4920368473085c5976a27ec6e9038eb9 = L.marker(
+                [40.7005057752842, -73.81632908384934],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_e845007abd8a4c0b87cf298a7d576827 = L.marker(
+                [40.75292723318126, -73.70931586733064],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_59beda3d37580ed9ddc64705f4a198dc = L.marker(
+                [40.76805542814507, -73.92484415217665],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_b582af82dcfb81d74920f73d271ff3a0 = L.marker(
+                [40.747180508981685, -73.8251651922932],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_af68dc3c26728c69293d2e3a3130bc5a = L.marker(
+                [40.7177364216317, -73.80567939252272],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_862041d9d9305532e7f2987c49e2cec4 = L.marker(
+                [40.59865531058224, -73.75348752144086],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_c2e8374b5a694527f42b1a810515a226 = L.marker(
+                [40.635876540798016, -74.10556032526767],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_32992dc63bab7acc9c23401789fe6c2a = L.marker(
+                [40.62257417575695, -74.07561522684486],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_13e11fe2062f9c005cbfbb3687e90ce0 = L.marker(
+                [40.60284640058876, -74.09195676300882],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_511d56be9686971cc8d6163e1ce82482 = L.marker(
+                [40.58451612059963, -74.08549793485295],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+    
+            var marker_ba5fc9d683f3c8fc1d1f493980f9fa5c = L.marker(
+                [40.516978800451795, -74.19614316989768],
+                {}
+            ).addTo(map_22a4a21c329c5908cc5c880e604d92f6);
+        
+</script>
+</html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+
+        <iframe width="100%" height="500px" src="q_2.html" frameborder="0" allowfullscreen=""></iframe>
+        
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get credit for your work after you have created a map</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>q_2.check()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see our solution (your code may look different!)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#q_2.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="when-was-the-closest-hospital-more-than-10-kilometers-away" class="level3">
+<h3 class="anchored" data-anchor-id="when-was-the-closest-hospital-more-than-10-kilometers-away">3) When was the closest hospital more than 10 kilometers away?</h3>
+<p>Create a DataFrame <code>outside_range</code> containing all rows from <code>collisions</code> with crashes that occurred more than 10 kilometers from the closest hospital.</p>
+<p>Note that both <code>hospitals</code> and <code>collisions</code> have EPSG 2263 as the coordinate reference system, and EPSG 2263 has units of meters.</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geopandas.tools <span class="im">import</span> sjoin_nearest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="97b0533e-b546-4708-e0f7-a00969d37901" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the nearest hospital for each collision</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>nearest_hospital <span class="op">=</span> sjoin_nearest(collisions, hospitals)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the distance between each collision and its nearest hospital</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>distances <span class="op">=</span> nearest_hospital.geometry.distance(collisions.geometry)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter collisions that occurred more than 10 kilometers away from the closest hospital</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>outside_range <span class="op">=</span> collisions[distances <span class="op">&gt;</span> <span class="dv">10000</span>]  <span class="co"># Assuming distance is in meters (10,000 meters = 10 kilometers)</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your answer</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#q_3.check()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>UserWarning: CRS mismatch between the CRS of left geometries and the CRS of right geometries.
+Use `to_crs()` to reproject one of the input geometries to match the CRS of the other.
+
+Left CRS: None
+Right CRS: EPSG:2263
+
+  nearest_hospital = sjoin_nearest(collisions, hospitals)
+/usr/local/lib/python3.10/dist-packages/geopandas/base.py:31: UserWarning: The indices of the two GeoSeries are different.
+  warn("The indices of the two GeoSeries are different.")</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lines below will give you a hint or solution code</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_3.hint()</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#q_3.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The next code cell calculates the percentage of collisions that occurred more than 10 kilometers away from the closest hospital.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>percentage <span class="op">=</span> <span class="bu">round</span>(<span class="dv">100</span><span class="op">*</span><span class="bu">len</span>(outside_range)<span class="op">/</span><span class="bu">len</span>(collisions), <span class="dv">2</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Percentage of collisions more than 10 km away from the closest hospital: </span><span class="sc">{}</span><span class="st">%"</span>.<span class="bu">format</span>(percentage))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="make-a-recommender." class="level3">
+<h3 class="anchored" data-anchor-id="make-a-recommender.">4) Make a recommender.</h3>
+<p>When collisions occur in distant locations, it becomes even more vital that injured persons are transported to the nearest available hospital.</p>
+<p>With this in mind, you decide to create a recommender that: - takes the location of the crash (in EPSG 2263) as input, - finds the closest hospital (where distance calculations are done in EPSG 2263), and - returns the name of the closest hospital.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> best_hospital(collision_location):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if outside_range is empty</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> outside_range.empty:</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"No hospitals found within the specified range"</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the nearest hospital to the collision location</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    nearest_hospital <span class="op">=</span> hospitals.geometry.unary_union.nearest_points(collision_location)[<span class="dv">1</span>]</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the name of the nearest hospital</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> hospitals[hospitals.geometry <span class="op">==</span> nearest_hospital][<span class="st">'name'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> name</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Test your function: this should suggest CALVARY HOSPITAL INC if outside_range is not empty</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_hospital(outside_range.geometry.iloc[<span class="dv">0</span>]))</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your answer</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>q_4.check()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lines below will give you a hint or solution code</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_4.hint()</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#q_4.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="which-hospital-is-under-the-highest-demand" class="level3">
+<h3 class="anchored" data-anchor-id="which-hospital-is-under-the-highest-demand">5) Which hospital is under the highest demand?</h3>
+<p>Considering only collisions in the <code>outside_range</code> DataFrame, which hospital is most recommended?</p>
+<p>Your answer should be a Python string that exactly matches the name of the hospital returned by the function you created in <strong>4)</strong>.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty dictionary to store the count of collisions for each hospital</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>collision_counts <span class="op">=</span> {}</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over each collision location in outside_range</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> location <span class="kw">in</span> outside_range.geometry:</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the name of the nearest hospital for the collision location</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    hospital_name <span class="op">=</span> best_hospital(location)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Increment the collision count for the hospital in the dictionary</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    collision_counts[hospital_name] <span class="op">=</span> collision_counts.get(hospital_name, <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the collision_counts dictionary is empty</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> collision_counts:</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    highest_demand <span class="op">=</span> <span class="st">"No collisions in the specified range"</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the hospital with the highest collision count</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    highest_demand <span class="op">=</span> <span class="bu">max</span>(collision_counts, key<span class="op">=</span>collision_counts.get)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your answer</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co">#q_5.check()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lines below will give you a hint or solution code</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_5.hint()</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#q_5.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="where-should-the-city-construct-new-hospitals" class="level3">
+<h3 class="anchored" data-anchor-id="where-should-the-city-construct-new-hospitals">6) Where should the city construct new hospitals?</h3>
+<p>Run the next code cell (without changes) to visualize hospital locations, in addition to collisions that occurred more than 10 kilometers away from the closest hospital.</p>
+<div class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>m_6 <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">40.7</span>, <span class="op">-</span><span class="dv">74</span>], zoom_start<span class="op">=</span><span class="dv">11</span>) </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>coverage <span class="op">=</span> gpd.GeoDataFrame(geometry<span class="op">=</span>hospitals.geometry).<span class="bu">buffer</span>(<span class="dv">10000</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>folium.GeoJson(coverage.geometry.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>)).add_to(m_6)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>HeatMap(data<span class="op">=</span>outside_range[[<span class="st">'LATITUDE'</span>, <span class="st">'LONGITUDE'</span>]], radius<span class="op">=</span><span class="dv">9</span>).add_to(m_6)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>folium.LatLngPopup().add_to(m_6)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>embed_map(m_6, <span class="st">'m_6.html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Click anywhere on the map to see a pop-up with the corresponding location in latitude and longitude.</p>
+<p>The city of New York reaches out to you for help with deciding locations for two brand new hospitals. They specifically want your help with identifying locations to bring the calculated percentage from step <strong>3)</strong> to less than ten percent. Using the map (and without worrying about zoning laws or what potential buildings would have to be removed in order to build the hospitals), can you identify two locations that would help the city accomplish this goal?</p>
+<p>Put the proposed latitude and longitude for hospital 1 in <code>lat_1</code> and <code>long_1</code>, respectively. (Likewise for hospital 2.)</p>
+<p>Then, run the rest of the cell as-is to see the effect of the new hospitals. Your answer will be marked correct, if the two new hospitals bring the percentage to less than ten percent.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your answer here: proposed location of hospital 1</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>lat_1 <span class="op">=</span> <span class="fl">40.751</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>long_1 <span class="op">=</span> <span class="op">-</span><span class="fl">73.977</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Your answer here: proposed location of hospital 2</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>lat_2 <span class="op">=</span> <span class="fl">40.791</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>long_2 <span class="op">=</span> <span class="op">-</span><span class="fl">73.922</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Do not modify the code below this line</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    new_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        {<span class="st">'Latitude'</span>: [lat_1, lat_2],</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>         <span class="st">'Longitude'</span>: [long_1, long_2]})</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    new_gdf <span class="op">=</span> gpd.GeoDataFrame(new_df, geometry<span class="op">=</span>gpd.points_from_xy(new_df.Longitude, new_df.Latitude))</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    new_gdf.crs <span class="op">=</span> {<span class="st">'init'</span> :<span class="st">'epsg:4326'</span>}</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    new_gdf <span class="op">=</span> new_gdf.to_crs(epsg<span class="op">=</span><span class="dv">2263</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get new percentage</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    new_coverage <span class="op">=</span> gpd.GeoDataFrame(geometry<span class="op">=</span>new_gdf.geometry).<span class="bu">buffer</span>(<span class="dv">10000</span>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    new_my_union <span class="op">=</span> new_coverage.geometry.unary_union</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    new_outside_range <span class="op">=</span> outside_range.loc[<span class="op">~</span>outside_range[<span class="st">"geometry"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: new_my_union.contains(x))]</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    new_percentage <span class="op">=</span> <span class="bu">round</span>(<span class="dv">100</span><span class="op">*</span><span class="bu">len</span>(new_outside_range)<span class="op">/</span><span class="bu">len</span>(collisions), <span class="dv">2</span>)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"(NEW) Percentage of collisions more than 10 km away from the closest hospital: </span><span class="sc">{}</span><span class="st">%"</span>.<span class="bu">format</span>(new_percentage))</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Did you help the city to meet its goal?</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    q_6.check()</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make the map</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">40.7</span>, <span class="op">-</span><span class="dv">74</span>], zoom_start<span class="op">=</span><span class="dv">11</span>) </span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>    folium.GeoJson(coverage.geometry.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>)).add_to(m)</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>    folium.GeoJson(new_coverage.geometry.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>)).add_to(m)</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx, row <span class="kw">in</span> new_gdf.iterrows():</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>        Marker([row[<span class="st">'Latitude'</span>], row[<span class="st">'Longitude'</span>]]).add_to(m)</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>    HeatMap(data<span class="op">=</span>new_outside_range[[<span class="st">'LATITUDE'</span>, <span class="st">'LONGITUDE'</span>]], radius<span class="op">=</span><span class="dv">9</span>).add_to(m)</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>    folium.LatLngPopup().add_to(m)</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>    display(embed_map(m, <span class="st">'q_6.html'</span>))</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>    q_6.hint()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see one potential answer </span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#q_6.solution()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="congratulations" class="level1">
+<h1>Congratulations!</h1>
+<p>You have just completed the Geospatial Analysis micro-course! Great job!</p>
+<hr>
+<p><em>Have questions or comments? Visit the <a href="https://www.kaggle.com/learn/geospatial-analysis/discussion">course discussion forum</a> to chat with other learners.</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
