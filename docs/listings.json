@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/geo_5/image.html",
       "/posts/geo_4/exercise_manipulating_geospatial_data.html",
+      "/posts/geo_5/image.html",
       "/posts/geo_3/exercise_interactive_maps.html",
       "/posts/geo_2/exercise-coordinate-reference-systems.html",
       "/posts/geo_1/firstmap.html",
